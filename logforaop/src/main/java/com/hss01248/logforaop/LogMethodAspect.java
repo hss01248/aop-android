@@ -24,7 +24,10 @@ public class LogMethodAspect {
                 if(args!= null){
                     des = s.replace("..", toStrings(args));
                 }
-                des = Integer.toHexString(joinPoint.getThis().hashCode())+"@"+des;
+                if(joinPoint.getThis() != null){
+                    des = Integer.toHexString(joinPoint.getThis().hashCode())+"@"+des;
+                }
+
                 //des = des+", \ninvoke by url:"+url;
                 Log.v(TAG, "start of "+des+", \n"+(around==null ? "":around.descExtraForLog()));
             }
@@ -81,7 +84,9 @@ public class LogMethodAspect {
                 if(args!= null){
                     des = s.replace("..", toStrings(args));
                 }
-                des = Integer.toHexString(joinPoint.getThis().hashCode())+"@"+des;
+                if(joinPoint.getThis() != null){
+                    des = Integer.toHexString(joinPoint.getThis().hashCode())+"@"+des;
+                }
                 //des = des+", \ninvoke by url:"+url;
                 Log.d(TAG, "start of "+des+", \n"+(before==null ? "":before.descExtraForLog()));
             }
