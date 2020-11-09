@@ -1,2 +1,4 @@
+include ':someaops'
+include ':logforaop'
 include ':app'
 rootProject.name = "AopAndoird"
