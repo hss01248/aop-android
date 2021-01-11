@@ -104,4 +104,36 @@ public abstract class MyObservable<T> {
             }
         };
     }
+
+    public MyObservable<T> observerOnBackThread(){
+        return new MyObservable<T>(){
+            @Override
+            public void subscrib(MyObserver<T> observer) {
+                MyObservable.this.subscrib(new MyObserver<T>() {
+                    @Override
+                    public void onNext(T t) {
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                //往下执行时切换线程
+                                observer.onNext(t);
+                            }
+                        }).start();
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        //同上
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        //同上
+                    }
+                });
+            }
+        };
+    }
+
+
 }

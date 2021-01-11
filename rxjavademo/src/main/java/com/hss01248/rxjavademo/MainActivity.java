@@ -39,8 +39,8 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("map2:", "integer:" + integer + "," + Thread.currentThread().getName());
                 return integer + "->String";
             }
-        }).subscribOnIO()
-        .observerOnMainThread()
+        })
+        .observerOnBackThread()
         .subscrib(new MyObserver<String>() {
             @Override
             public void onNext(String s) {
