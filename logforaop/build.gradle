@@ -29,5 +29,5 @@ android {
 
 dependencies {
     api 'org.aspectj:aspectjrt:1.9.5'
-
+    api 'com.google.code.gson:gson:2.8.5'
 }

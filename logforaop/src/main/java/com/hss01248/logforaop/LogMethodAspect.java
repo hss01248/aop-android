@@ -4,12 +4,15 @@ import android.util.Log;
 import android.webkit.WebView;
 
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 
 public class LogMethodAspect {
 
+    static Gson gson = new GsonBuilder().serializeNulls().create();
 
     public static Object logAround(boolean enableLog, String TAG, boolean logResultIfReturnNull, ProceedingJoinPoint joinPoint, IAround around) throws Throwable{
         long start = System.currentTimeMillis();
@@ -110,13 +113,21 @@ public class LogMethodAspect {
             if(arg instanceof WebView){
                 sb.append("webview").append(arg.hashCode());
             }else {
-                sb.append(ObjParser.parseObj(arg));
+                sb.append(toStr(arg));
             }
             if(i != args.length-1){
                 sb.append(",");
             }
         }
         return sb.toString();
+    }
+
+    private static String toStr(Object arg) {
+        try {
+            return gson.toJson(arg);
+        }catch (Throwable throwable){
+            return ObjParser.parseObj(arg);
+        }
     }
 
     public interface IAround{
