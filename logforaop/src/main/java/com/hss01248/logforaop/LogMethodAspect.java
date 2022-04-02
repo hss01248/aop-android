@@ -1,5 +1,6 @@
 package com.hss01248.logforaop;
 
+import android.text.TextUtils;
 import android.util.Log;
 import android.webkit.WebView;
 
@@ -32,7 +33,7 @@ public class LogMethodAspect {
                 }
 
                 //des = des+", \ninvoke by url:"+url;
-                Log.v(TAG, "start of "+des+", \n"+(around==null ? "":around.descExtraForLog()));
+                Log.v(TAG, Thread.currentThread().getName()+", start of "+des+", \n"+(around==null ? "":around.descExtraForLog()));
             }
             if(around != null){
                 around.before(joinPoint,des);
@@ -91,7 +92,7 @@ public class LogMethodAspect {
                     des = Integer.toHexString(joinPoint.getThis().hashCode())+"@"+des;
                 }
                 //des = des+", \ninvoke by url:"+url;
-                Log.d(TAG, "start of "+des+", \n"+(before==null ? "":before.descExtraForLog()));
+                Log.d(TAG, Thread.currentThread().getName()+", start of "+des+", \n"+(before==null ? "":before.descExtraForLog()));
             }
             if(before != null){
                 before.before(joinPoint,des);
@@ -124,7 +125,16 @@ public class LogMethodAspect {
 
     private static String toStr(Object arg) {
         try {
-            return gson.toJson(arg);
+            if(arg == null){
+                return "null";
+            }
+            String  str =  gson.toJson(arg);
+            if(TextUtils.isEmpty(str) || "null".equals(str)){
+                //return ObjParser.parseObj(arg);
+                //return arg.getClass().getSimpleName()+arg.toString()
+                return arg.toString();
+            }
+            return str;
         }catch (Throwable throwable){
             return ObjParser.parseObj(arg);
         }

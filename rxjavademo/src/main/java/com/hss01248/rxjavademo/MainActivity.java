@@ -3,6 +3,7 @@ package com.hss01248.rxjavademo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -11,7 +12,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        doRx();
+
     }
 
     private void doRx() {
@@ -19,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void subscrib(MyObserver<String> observer) {
                 Log.d("create:", "," + Thread.currentThread().getName());
-                for (int i = 0; i < 10; i++) {
+                for (int i = 0; i < 1; i++) {
                     observer.onNext(i + "");
                 }
 
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         }).map(new MyFunc<Integer, String>() {
             @Override
             public Integer apply(String s) {
-                Log.d("map1:", "integer:" + s + "," + Thread.currentThread().getName());
+                Log.d("map1:", "apply integer:" + s + "," + Thread.currentThread().getName());
                 return Integer.parseInt(s) * 2;
             }
         }).subscribOnIO()
@@ -36,15 +37,15 @@ public class MainActivity extends AppCompatActivity {
         .map(new MyFunc<String, Integer>() {
             @Override
             public String apply(Integer integer) {
-                Log.d("map2:", "integer:" + integer + "," + Thread.currentThread().getName());
-                return integer + "->String";
+                Log.d("map2:", "apply integer:" + integer + "," + Thread.currentThread().getName());
+                return integer + " 加 String";
             }
         })
         .observerOnBackThread()
         .subscrib(new MyObserver<String>() {
             @Override
             public void onNext(String s) {
-                Log.d("onNext:", "finnaly:" + s + "," + Thread.currentThread().getName());
+                Log.d("onNext:", "finnally:" + s + "," + Thread.currentThread().getName());
             }
 
             @Override
@@ -59,5 +60,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void rx(View view) {
+        doRx();
     }
 }
