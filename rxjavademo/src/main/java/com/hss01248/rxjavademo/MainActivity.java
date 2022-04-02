@@ -26,39 +26,40 @@ public class MainActivity extends AppCompatActivity {
 
 
             }
-        }).map(new MyFunc<Integer, String>() {
-            @Override
-            public Integer apply(String s) {
-                Log.d("map1:", "apply integer:" + s + "," + Thread.currentThread().getName());
-                return Integer.parseInt(s) * 2;
-            }
         }).subscribOnIO()
-        .observerOnMainThread()
-        .map(new MyFunc<String, Integer>() {
-            @Override
-            public String apply(Integer integer) {
-                Log.d("map2:", "apply integer:" + integer + "," + Thread.currentThread().getName());
-                return integer + " 加 String";
-            }
-        })
-        .observerOnBackThread()
-        .subscrib(new MyObserver<String>() {
-            @Override
-            public void onNext(String s) {
-                Log.d("onNext:", "finnally:" + s + "," + Thread.currentThread().getName());
-            }
+                .map(new MyFunc<Integer, String>() {
+                    @Override
+                    public Integer apply(String s) {
+                        Log.d("map1:", "apply integer:" + s + "," + Thread.currentThread().getName());
+                        return Integer.parseInt(s) * 2;
+                    }
+                }).subscribOnIO()
+                .observerOnMainThread()
+                .map(new MyFunc<String, Integer>() {
+                    @Override
+                    public String apply(Integer integer) {
+                        Log.d("map2:", "apply integer:" + integer + "," + Thread.currentThread().getName());
+                        return integer + " 加 String";
+                    }
+                })
+                .observerOnBackThread()
+                .subscrib(new MyObserver<String>() {
+                    @Override
+                    public void onNext(String s) {
+                        Log.d("onNext:", "finnally:" + s + "," + Thread.currentThread().getName());
+                    }
 
-            @Override
-            public void onError(Throwable throwable) {
-                throwable.printStackTrace();
+                    @Override
+                    public void onError(Throwable throwable) {
+                        throwable.printStackTrace();
 
-            }
+                    }
 
-            @Override
-            public void onComplete() {
-                Log.d("onComplete:", "finnaly: onComplete");
-            }
-        });
+                    @Override
+                    public void onComplete() {
+                        Log.d("onComplete:", "finnaly: onComplete");
+                    }
+                });
 
     }
 
