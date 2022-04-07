@@ -1,5 +1,6 @@
 package com.hss01248.rxjavademo;
 
+import android.support.annotation.VisibleForTesting;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +14,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+    }
+
+    @VisibleForTesting
+    public boolean cleanUp() {
+        Log.w("cl","11111");
+        int i = 3/1;
+        Log.w("cl","22222");
+        return false;
     }
 
     private void doRx() {
@@ -65,5 +74,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void rx(View view) {
         doRx();
+    }
+
+    public void cleanup2(View view) {
+      boolean i =   cleanUp();
+      Log.d("result","xxx:"+i);
     }
 }
