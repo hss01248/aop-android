@@ -18,4 +18,11 @@
        android:onClick="cleanup2"
        android:layout_height="wrap_content"/>
 
+   <Button
+       android:layout_width="match_parent"
+       android:text="test androidx work"
+       android:onClick="androidxWorkCleanUp"
+       android:layout_height="wrap_content"/>
+
+
 </LinearLayout>

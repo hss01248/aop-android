@@ -1,7 +1,12 @@
 package com.hss01248.rxjavademo;
 
-import android.support.annotation.VisibleForTesting;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.VisibleForTesting;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.work.WorkManager;
+import androidx.work.impl.WorkManagerImpl;
+import androidx.work.impl.utils.ForceStopRunnable;
+
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -79,5 +84,17 @@ public class MainActivity extends AppCompatActivity {
     public void cleanup2(View view) {
       boolean i =   cleanUp();
       Log.d("result","xxx:"+i);
+    }
+
+    @SuppressLint("RestrictedApi")
+    public void androidxWorkCleanUp(View view) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                boolean i =  new ForceStopRunnable(getApplicationContext(), WorkManagerImpl.getInstance(getApplicationContext())).cleanUp();
+                Log.d("result2","xxx:"+i);
+            }
+        }).start();
+
     }
 }

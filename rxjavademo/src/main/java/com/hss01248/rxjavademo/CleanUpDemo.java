@@ -18,6 +18,18 @@ public class CleanUpDemo {
         return safeExecute(joinPoint,false);
     }
 
+    /**
+     * Caused by java.lang.IncompatibleClassChangeError
+     * Class 'java.lang.Boolean' does not implement interface 'org.aspectj.lang.JoinPoint' in call to 'java.lang.Object[] org.aspectj.lang.JoinPoint.getArgs()'
+     * @param joinPoint
+     * @return
+     * @throws Throwable
+     */
+    @Around("execution(* androidx.work.impl.utils.ForceStopRunnable.cleanUp())")
+    public Boolean cleanUp2(ProceedingJoinPoint joinPoint) throws Throwable{
+        return (Boolean) safeExecute(joinPoint,false);
+    }
+
     static Object safeExecute(ProceedingJoinPoint joinPoint){
         return safeExecute(joinPoint,null);
     }
