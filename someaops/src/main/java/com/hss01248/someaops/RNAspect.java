@@ -14,13 +14,13 @@ import org.aspectj.lang.annotation.Before;
  * data:2020/7/17
  * desc:
  */
-@Aspect
+//@Aspect
 public class RNAspect {
 
     private static final String TAG = "RNAspect";
 
 
-    @Before("execution(* com.facebook.react.bridge.Promise.*(..))  ||  @annotation(com.facebook.react.bridge.ReactMethod)")
+    //@Before("execution(* com.facebook.react.bridge.Promise.*(..))  ||  @annotation(com.facebook.react.bridge.ReactMethod)")
     public void weaveJoinPoint(JoinPoint joinPoint) throws Throwable {
         if(joinPoint.getThis().getClass().getName().equals("com.facebook.react.uimanager.UIManagerModule")){
             return;

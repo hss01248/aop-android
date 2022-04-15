@@ -1,6 +1,5 @@
 package com.hss01248.logforaop;
 
-
 import android.util.Pair;
 
 /**
@@ -94,69 +93,87 @@ public final class ArrayParser {
         return Pair.create(Pair.create(cross, vertical), builder.toString());
     }
 
+
+    static final String newLine = "\n   ";
     /**
      * 数组转化为字符串
      */
     public static Pair arrayToString(Object object) {
         StringBuilder builder = new StringBuilder("[");
         int length;
+
+
+
         if (object instanceof int[]) {
             int[] ints = (int[]) object;
             length = ints.length;
             for (int i : ints) {
-                builder.append(i).append(",\t");
+                builder.append(i).append(",").append(newLine);
             }
         } else if (object instanceof byte[]) {
             byte[] bytes = (byte[]) object;
             length = bytes.length;
             for (byte item : bytes) {
-                builder.append(item).append(",\t");
+                builder.append(item).append(",").append(newLine);
             }
         } else if (object instanceof short[]) {
             short[] shorts = (short[]) object;
             length = shorts.length;
             for (short item : shorts) {
-                builder.append(item).append(",\t");
+                builder.append(item).append(",").append(newLine);
             }
         } else if (object instanceof long[]) {
             long[] longs = (long[]) object;
             length = longs.length;
             for (long item : longs) {
-                builder.append(item).append(",\t");
+                builder.append(item).append(",").append(newLine);
             }
         } else if (object instanceof float[]) {
             float[] floats = (float[]) object;
             length = floats.length;
             for (float item : floats) {
-                builder.append(item).append(",\t");
+                builder.append(item).append(",").append(newLine);
             }
         } else if (object instanceof double[]) {
             double[] doubles = (double[]) object;
             length = doubles.length;
             for (double item : doubles) {
-                builder.append(item).append(",\t");
+                builder.append(item).append(",").append(newLine);
             }
         } else if (object instanceof boolean[]) {
             boolean[] booleans = (boolean[]) object;
             length = booleans.length;
             for (boolean item : booleans) {
-                builder.append(item).append(",\t");
+                builder.append(item).append(",").append(newLine);
             }
         } else if (object instanceof char[]) {
             char[] chars = (char[]) object;
             length = chars.length;
             for (char item : chars) {
-                builder.append(item).append(",\t");
+                builder.append(item).append(",").append(newLine);
             }
         } else {
+            //todo 这里能转吗?
             Object[] objects = (Object[]) object;
             length = objects.length;
-            for (Object item : objects) {
-                builder.append(ObjParser.parseObj(item)).append(",\t");
+            toStr(objects,builder);
+
+        }
+        // 这里有bug:
+        // 2 : xxxxxxxxtes]  实际: "xxxxxxxxtest3"
+        return Pair.create(length, builder.append("]").toString());
+    }
+
+    static <T> void  toStr(T[] objects,StringBuilder builder){
+        int length = objects.length;
+        for (int i = 0; i < length; i++) {
+            Object item = objects[i];
+            builder.append(i).append(" : ").append(ObjParser.parseObj(item));
+            if(i != objects.length-1){
+                builder.append(",").append(newLine);
             }
         }
-        return Pair.create(length, builder.replace(builder.length() - 2, builder.length(), "]").toString());
+
     }
 
 }
-
