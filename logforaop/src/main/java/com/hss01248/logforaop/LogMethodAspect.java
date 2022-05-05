@@ -25,7 +25,7 @@ public class LogMethodAspect {
             des = s;
             if(enableLog){
                 Object[] args = joinPoint.getArgs();
-                if(args!= null){
+                if(args!= null && s.contains("..")){
                     des = s.replace("..", toStrings(args));
                 }
                 if(joinPoint.getThis() != null){
